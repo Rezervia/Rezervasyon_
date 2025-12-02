@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masa Durumları - Restoran Sistemi</title>
+    <link rel="shortcut icon" href="antakye.ico" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #ffffff 0%, #f7f7f8 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .page-wrap {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            color: #c94c29;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .geri-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #c94c29;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(201, 76, 41, 0.3);
+            transition: all 0.3s;
+        }
+
+        .geri-btn:hover {
+            background: #b04223;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(201, 76, 41, 0.4);
+            color: white;
+        }
+
+        .tables-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            border: 3px solid #e0e0e0;
+        }
+
+        /* DOLU MASA - KIRMIZI */
+        .table-card.occupied {
+            background: #c94c29;
+            color: white;
+            border-color: #c94c29;
+        }
+
+        /* BOŞ MASA - BEYAZ */
+        .table-card.available {
+            background: white;
+            color: #2c3e50;
+            border-color: #2ecc71;
+        }
+
+        .table-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .table-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .table-number {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .table-status {
+            font-size: 0.9em;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+            animation: slideUp 0.4s ease;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+            transition: all 0.3s;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .close-btn:hover {
+            color: #e74c3c;
+            background: #f0f0f0;
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #c94c29;
+        }
+
+        .modal-header h2 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .menu-section {
+            margin-bottom: 25px;
+        }
+
+        .menu-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            border-bottom: 2px solid #c94c29;
+            padding-bottom: 10px;
+        }
+
+        .menu-items {
+            display: grid;
+            gap: 15px;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .menu-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .menu-item.selected {
+            background: #ffe8e0;
+            border-color: #c94c29;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .item-price {
+            color: #c94c29;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: #c94c29;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-btn:hover {
+            background: #b04223;
+            transform: scale(1.1);
+        }
+
+        .quantity-btn:active {
+            transform: scale(0.95);
+        }
+
+        .quantity-display {
+            font-weight: bold;
+            min-width: 30px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .order-summary {
+            background: linear-gradient(135deg, #c94c29 0%, #d86b3e 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+
+        .order-summary h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .total-price {
+            font-size: 1.8em;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: white;
+            color: #c94c29;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #c94c29;
+            font-size: 1.2em;
+        }
+
+        .error {
+            background: #e74c3c;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 560px) {
+            .geri-btn {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrap">
+        <div class="header-section">
+            <h1>Masa Durumları</h1>
+            <a class="geri-btn" href="admin.html" aria-label="Geri"><i class="fas fa-arrow-left"></i> Admin Paneli</a>
+        </div>
+
+        <div id="loading" class="loading">Yükleniyor...</div>
+        <div id="error" class="error" style="display: none;"></div>
+        <div class="tables-grid" id="tablesGrid"></div>
+
+        <div class="modal" id="orderModal">
+            <div class="modal-content">
+                <button class="close-btn" onclick="closeModal()">×</button>
+                <div class="modal-header">
+                    <h2 id="modalTitle">Masa 1 - Sipariş</h2>
+                </div>
+
+                <div id="menuContainer"></div>
+
+                <div class="order-summary">
+                    <h3>📋 Sipariş Özeti</h3>
+                    <div id="orderSummary" class="empty-cart">
+                        Henüz ürün eklenmedi
+                    </div>
+                    <div class="total-price" id="totalPrice">
+                        Toplam: 0 ₺
+                    </div>
+                    <button class="submit-btn" onclick="submitOrder()">
+                        ✅ Siparişi Tamamla
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            const API_URL = 'http://localhost:3000/api';
+
+            let tables = [];
+            let menuItems = [];
+            let currentTable = null;
+            let cart = {};
+            let currentOrderId = null;
+
+            const categoryNames = {
+                'tavukdonerdurumler': 'Tavuk Döner Dürümler',
+                'kebap': 'Izgara & Kebap',
+                'servisdoner': 'Servis Döner',
+                'mezeler': 'Mezeler',
+                'tatlilar': 'Tatlılar',
+                'icecekler': 'İçecekler'
+            };
+
+            async function init() {
+                try {
+                    await loadTables();
+                    await loadMenu();
+                    document.getElementById('loading').style.display = 'none';
+                } catch (error) {
+                    showError('Veri yüklenirken hata oluştu: ' + error.message);
+                }
+            }
+
+            function showError(message) {
+                const errorDiv = document.getElementById('error');
+                errorDiv.textContent = message;
+                errorDiv.style.display = 'block';
+                document.getElementById('loading').style.display = 'none';
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            async function loadTables() {
+                try {
+                    const response = await fetch(`${API_URL}/tables`);
+                    if (!response.ok) throw new Error('Masalar yüklenemedi');
+                    tables = await response.json();
+
+                    // Her masa için aktif sipariş kontrolü yap
+                    for (let table of tables) {
+                        try {
+                            const orderResponse = await fetch(`${API_URL}/orders/table/${table.masaNumarasi}`);
+                            const order = await orderResponse.json();
+
+                            // Eğer aktif sipariş varsa, masa durumunu 'occupied' olarak güncelle
+                            if (order && order.durum === 'active') {
+                                table.durum = 'occupied';
+                            } else {
+                                // Aktif sipariş yoksa 'available' olarak ayarla
+                                table.durum = 'available';
+                            }
+                        } catch (error) {
+                            // Sipariş yoksa masa boş
+                            table.durum = 'available';
+                        }
+                    }
+
+                    renderTables();
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            async function loadMenu() {
+                try {
+                    const response = await fetch(`${API_URL}/menu`);
+                    if (!response.ok) throw new Error('Menü yüklenemedi');
+                    menuItems = await response.json();
+                } catch (error) {
+                    throw error;
+                }
+            }
+
+            function renderTables() {
+                const grid = document.getElementById('tablesGrid');
+                grid.innerHTML = '';
+
+                tables.forEach(table => {
+                    const tableCard = document.createElement('div');
+                    const isOccupied = table.durum === 'occupied';
+                    const statusClass = isOccupied ? 'occupied' : 'available';
+
+                    tableCard.className = `table-card ${statusClass}`;
+                    tableCard.innerHTML = `
+                    <div class="table-icon">🪑</div>
+                    <div class="table-number">Masa ${table.masaNumarasi}</div>
+                    <div class="table-status">${isOccupied ? '🔴 Dolu' : '✅ Boş'}</div>
+                `;
+                    tableCard.onclick = () => openModal(table.masaNumarasi);
+                    grid.appendChild(tableCard);
+                });
+            }
+
+            async function openModal(tableNumber) {
+                currentTable = tableNumber;
+                cart = {};
+                currentOrderId = null;
+
+                document.getElementById('modalTitle').textContent = `Masa ${tableNumber} - Sipariş`;
+
+                try {
+                    const response = await fetch(`${API_URL}/orders/table/${tableNumber}`);
+                    const existingOrder = await response.json();
+
+                    if (existingOrder && existingOrder.durum === 'active' && existingOrder.items) {
+                        currentOrderId = existingOrder.id;
+                        existingOrder.items.forEach(item => {
+                            cart[item.menuItemId] = item.quantity;
+                        });
+                    }
+                } catch (error) {
+                    console.log('Mevcut sipariş yok');
+                }
+
+                renderMenu();
+                updateOrderSummary();
+
+                document.getElementById('orderModal').classList.add('active');
+            }
+
+            function closeModal() {
+                document.getElementById('orderModal').classList.remove('active');
+            }
+
+            function renderMenu() {
+                const menuContainer = document.getElementById('menuContainer');
+                menuContainer.innerHTML = '';
+
+                const categories = {};
+                menuItems.forEach(item => {
+                    if (!categories[item.kategori]) {
+                        categories[item.kategori] = [];
+                    }
+                    categories[item.kategori].push(item);
+                });
+
+                Object.keys(categories).forEach(category => {
+                    const section = document.createElement('div');
+                    section.className = 'menu-section';
+
+                    const title = document.createElement('h3');
+                    title.textContent = categoryNames[category] || category;
+                    section.appendChild(title);
+
+                    const itemsDiv = document.createElement('div');
+                    itemsDiv.className = 'menu-items';
+
+                    categories[category].forEach(item => {
+                        const itemDiv = createMenuItem(item);
+                        itemsDiv.appendChild(itemDiv);
+                    });
+
+                    section.appendChild(itemsDiv);
+                    menuContainer.appendChild(section);
+                });
+            }
+
+            function createMenuItem(item) {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'menu-item';
+                itemDiv.id = `item-${item.id}`;
+
+                const quantity = cart[item.id] || 0;
+
+                itemDiv.innerHTML = `
+                <div class="item-info">
+                    <div class="item-name">${item.ad}</div>
+                    <div class="item-price">${item.fiyat} ₺</div>
+                </div>
+                <div class="quantity-controls">
+                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                    <span class="quantity-display" id="qty-${item.id}">${quantity}</span>
+                    <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                </div>
+            `;
+
+                if (quantity > 0) {
+                    itemDiv.classList.add('selected');
+                }
+
+                return itemDiv;
+            }
+
+            function updateQuantity(itemId, change) {
+                cart[itemId] = (cart[itemId] || 0) + change;
+
+                if (cart[itemId] <= 0) {
+                    delete cart[itemId];
+                }
+
+                const qtyDisplay = document.getElementById(`qty-${itemId}`);
+                qtyDisplay.textContent = cart[itemId] || 0;
+
+                const itemDiv = document.getElementById(`item-${itemId}`);
+                if (cart[itemId] > 0) {
+                    itemDiv.classList.add('selected');
+                } else {
+                    itemDiv.classList.remove('selected');
+                }
+
+                updateOrderSummary();
+            }
+
+            function updateOrderSummary() {
+                const summaryDiv = document.getElementById('orderSummary');
+                const totalDiv = document.getElementById('totalPrice');
+
+                if (Object.keys(cart).length === 0) {
+                    summaryDiv.innerHTML = '<div class="empty-cart">Henüz ürün eklenmedi</div>';
+                    totalDiv.textContent = 'Toplam: 0 ₺';
+                    return;
+                }
+
+                let total = 0;
+                let summaryHTML = '';
+
+                Object.keys(cart).forEach(itemId => {
+                    const item = menuItems.find(m => m.id == itemId);
+                    if (item && cart[itemId] > 0) {
+                        const itemTotal = item.fiyat * cart[itemId];
+                        total += itemTotal;
+                        summaryHTML += `
+                        <div class="summary-item">
+                            <span>${item.ad} x${cart[itemId]}</span>
+                            <span>${itemTotal} ₺</span>
+                        </div>
+                    `;
+                    }
+                });
+
+                summaryDiv.innerHTML = summaryHTML;
+                totalDiv.textContent = `Toplam: ${total.toFixed(2)} ₺`;
+            }
+
+            async function submitOrder() {
+                if (Object.keys(cart).length === 0) {
+                    alert('Lütfen en az bir ürün seçin!');
+                    return;
+                }
+
+                try {
+                    const items = [];
+                    let totalPrice = 0;
+
+                    Object.keys(cart).forEach(itemId => {
+                        const item = menuItems.find(m => m.id == itemId);
+                        if (item && cart[itemId] > 0) {
+                            const itemTotal = item.fiyat * cart[itemId];
+                            totalPrice += itemTotal;
+                            items.push({
+                                menuItemId: item.id,
+                                quantity: cart[itemId],
+                                price: itemTotal
+                            });
+                        }
+                    });
+
+                    const orderData = {
+                        tableNumber: currentTable,
+                        items: items,
+                        totalPrice: totalPrice,
+                        durum: 'active'  // Sipariş durumunu 'active' olarak ayarla
+                    };
+
+                    let response;
+                    if (currentOrderId) {
+                        response = await fetch(`${API_URL}/orders/${currentOrderId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(orderData)
+                        });
+                    } else {
+                        response = await fetch(`${API_URL}/orders`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(orderData)
+                        });
+                    }
+
+                    if (!response.ok) throw new Error('Sipariş gönderilemedi');
+
+                    const result = await response.json();
+                    alert('✅ ' + result.message);
+
+                    closeModal();
+                    await loadTables();
+
+                } catch (error) {
+                    showError('Sipariş gönderilirken hata oluştu: ' + error.message);
+                }
+            }
+
+            document.getElementById('orderModal').addEventListener('click', function (e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            init();
+        </script>
+</body>
+
+</html>

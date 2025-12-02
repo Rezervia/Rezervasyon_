@@ -1,0 +1,322 @@
+:root {
+    --primary: #c94c29;
+    --secondary: #2c3e50;
+    --muted: #6c757d;
+    --panel-bg: #ffffff;
+    --panel-border: rgba(0,0,0,0.06);
+    --card-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    --light: #f8f9fa;
+}
+
+/* Base */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff;
+    color: var(--secondary);
+    overflow-x: hidden;
+}
+
+/* ---------- index / genel stiller ---------- */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('gorsel.png') no-repeat center center/cover;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+}
+.hero h1 { font-weight: 800; font-size: 3.5rem; }
+
+.btn-reserve {
+    background-color: var(--primary);
+    border: none;
+    padding: 12px 32px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+}
+.btn-reserve:hover {
+    background-color: #b04223;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 76, 41, 0.3);
+}
+
+.section-title { position: relative; text-align: center; margin-bottom: 2.5rem; }
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary);
+    margin: 0.5rem auto;
+    border-radius: 2px;
+}
+
+.card-menu { transition: all 0.3s ease; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
+.card-menu:hover { transform: translateY(-8px); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+
+.gallery img { height: 250px; object-fit: cover; transition: 0.4s; }
+.gallery img:hover { transform: scale(1.05); }
+
+.footer {
+    background-color: var(--secondary);
+    color: #ecf0f1;
+    padding: 3rem 0 2rem;
+}
+.footer a { color: #bdc3c7; text-decoration: none; }
+.footer a:hover { color: #fff; text-decoration: underline; }
+
+.social-icons a {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; background: rgba(255,255,255,0.1);
+    border-radius: 50%; margin: 0 6px; color: white; transition: 0.3s;
+}
+.social-icons a:hover { background: var(--primary); transform: translateY(-3px); }
+
+/* Rotator / SVG textPath */
+.rotator-wrap { display: flex; justify-content: center; align-items: center; padding: 2rem 0; }
+.rotator { position: relative; width: clamp(280px, 62vw, 720px); height: clamp(280px, 62vw, 720px); margin: 0 auto; overflow: visible; }
+.rotor-svg { width: 100%; height: 100%; display: block; pointer-events: none; }
+.rotating-text-group { transform-origin: 50% 50%; animation: spin 18s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.rotor-text { fill: var(--secondary); font-weight: 700; font-size: clamp(8px, 1.8vw, 16px); letter-spacing: 1px; }
+.center-link {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: clamp(180px, 34vw, 420px); height: clamp(180px, 34vw, 420px);
+    border-radius: 50%; overflow: hidden; z-index: 3; display: block;
+    box-shadow: 0 20px 44px rgba(0,0,0,0.18);
+}
+.center-link img {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position: center center; /* eklendi: daire içinde görselin ortalanması için */
+    display:block;
+}
+
+/* Small screens rotator tweaks */
+@media (max-width: 600px) {
+    .rotating-text-group { animation-duration: 26s; }
+    .rotor-text { font-size: clamp(7px, 3.6vw, 12px); }
+}
+
+/* Navbar logo */
+.navbar-brand img {
+    width: clamp(44px, 7.5vw, 80px);
+    height: clamp(44px, 7.5vw, 80px);
+    object-fit: cover; display: inline-block; border-radius: 50%;
+    overflow: hidden; box-shadow: 0 3px 8px rgba(0,0,0,0.14); vertical-align: middle;
+}
+
+/* ensure brand logo and text are vertically centered and spaced */
+.navbar-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    text-decoration: none;
+}
+.navbar-brand img {
+    /* keep existing rules but ensure no misalignment from default align-text-top */
+    vertical-align: middle;
+}
+/* optional: tweak brand text for consistent vertical centering */
+.navbar-brand > *:not(img) {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1;
+    margin: 0;
+}
+
+/* Footer heart / admin link */
+.footer-heart { text-align: center; margin-top: 1rem; margin-bottom: 0; }
+.footer-heart .heart-icon { color: #e63946; text-shadow: 0 1px 0 rgba(0,0,0,0.08); }
+.footer-heart .footer-admin-link {
+    color: inherit; text-decoration: none; display: inline-flex; align-items: center;
+    gap: .5rem; padding: .35rem .6rem; border-radius: 999px; transition: background .15s ease, transform .08s ease;
+}
+.footer-heart .footer-admin-link:hover { background: rgba(255,255,255,0.03); transform: translateY(-2px); cursor: pointer; }
+
+/* ---------- personeller specific ---------- */
+.sidebar {
+    background-color: var(--secondary);
+    height: 100vh;
+    position: fixed;
+    width: 250px;
+    z-index: 100;
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+.content { margin-left: 250px; padding: 2rem; min-height: 100vh; }
+.card-header {
+    background: transparent; color: var(--secondary); font-weight: 700;
+    border-bottom: 1px solid var(--panel-border);
+}
+.badge-dayoff {
+    background-color: var(--primary); color: white; padding: 4px 10px; border-radius: 20px;
+    font-size: 0.85rem; font-weight: 600;
+}
+.card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 12px; box-shadow: var(--card-shadow); }
+
+.form-control.bg-secondary { background: #fff !important; color: var(--secondary) !important; border: 1px solid var(--panel-border); }
+.form-select.bg-secondary { background: #fff !important; color: var(--secondary) !important; border: 1px solid var(--panel-border); }
+
+table.table-light th, table.table-light td { border-top: 1px solid var(--panel-border); }
+
+/* responsive improvements for mobile */
+@media (max-width: 992px) {
+    .sidebar { position: relative; width: 100%; height: auto; }
+    .content { margin-left: 0; padding: 1rem; }
+}
+
+/* Mobile: sidebar becomes a top bar and nav row is horizontally scrollable */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed; top: 0; left: 0; right: 0; height: auto; width: 100%;
+        display: flex; align-items: center; padding: 0.5rem 0.75rem;
+    }
+    .sidebar .p-3.border-bottom { border-bottom: none; padding-right: .5rem; padding-left: .5rem; }
+    .sidebar .p-3.d-flex { display: none; }
+    .sidebar ul.nav { display: flex; flex-direction: row; gap: 0.25rem; overflow-x: auto; padding: 0 .5rem; margin: 0; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+    .sidebar .nav-link { padding: 0.5rem 0.75rem; font-size: 0.95rem; display: inline-flex; align-items: center; }
+    .content { margin-left: 0; margin-top: 68px; padding: 1rem; }
+    .content .btn { width: 100%; }
+    .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* small helper for personeller add button (moved from inline) */
+.btn-primary-custom {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+}
+
+/* ---------- admingiris specific ---------- */
+.admin-card {
+    max-width: 420px; width: 100%; background: #fff; border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 1.75rem;
+}
+.admin-logo {
+    width: 84px; height: 84px; border-radius: 50%; overflow: hidden; margin: 0 auto 1rem;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+.admin-logo img { width:100%; height:100%; object-fit:cover; display:block; }
+
+h3 { text-align:center; color:var(--secondary); margin-bottom: .5rem; font-weight:700; }
+.lead-small { text-align:center; color:#6c757d; font-size:.95rem; margin-bottom:1rem; }
+
+/* Bootstrap .btn-primary override to use brand color in admin login */
+.btn-primary { background: var(--primary); border: none; }
+
+/* small link under form */
+.back-link { display:block; text-align:center; margin-top: .75rem; color: var(--secondary); text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+
+/* ---------- horizontal sliding gallery ---------- */
+.gallery-scroll {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 1rem 0;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin; /* Firefox */
+    scroll-behavior: smooth;
+}
+
+/* hide default scrollbar on webkit (optional) */
+.gallery-scroll::-webkit-scrollbar { height: 8px; }
+.gallery-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 999px; }
+.gallery-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* each gallery item (card) */
+.gallery-item {
+    flex: 0 0 auto;
+    width: clamp(220px, 38vw, 340px);
+    scroll-snap-align: center;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* image inside item */
+.gallery-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform .35s ease;
+}
+
+/* hover/peek effect */
+.gallery-item:hover { transform: translateY(-6px); box-shadow: 0 14px 34px rgba(0,0,0,0.12); }
+.gallery-item:hover img { transform: scale(1.04); }
+
+/* caption area (optional) */
+.gallery-item .caption {
+    padding: .75rem .9rem;
+    font-size: .95rem;
+    color: var(--secondary);
+}
+
+/* On larger screens show slightly taller images */
+@media (min-width: 992px) {
+    .gallery-item { width: clamp(260px, 28vw, 360px); }
+    .gallery-item img { height: 260px; }
+}
+
+/* auto-scrolling helper: disable scroll-snap & smooth behavior while auto-scrolling */
+.gallery-scroll.auto-scrolling {
+    scroll-snap-type: none;
+    scroll-behavior: auto;
+}
+
+/* optional: visually indicate pause on hover focus (subtle) */
+.gallery-scroll:focus, .gallery-scroll:hover {
+    outline: none;
+}
+
+/* Footer: sosyal blok ve iletişim bilgilerini tam ortala */
+.footer .col-md-4 {
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+}
+
+/* Sosyal ikonları yuvarlak ve ortalı göster */
+.footer .social-icons {
+    display: flex;
+    gap: .6rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: .6rem;
+}
+.footer .social-icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    text-decoration: none;
+    transition: background .15s ease, transform .12s ease;
+}
+.footer .social-icons a:hover {
+    background: var(--primary);
+    transform: translateY(-3px);
+}
+
+/* küçük iletişim metinlerini de ortala */
+.footer .small, .footer p.small {
+    text-align: center;
+    margin: 0;
+}

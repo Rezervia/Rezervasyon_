@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Lezzetin adresi: Antakye Restaurant – Tadında söz bırakan yerel ve uluslararası mutfağı keşfedin.">
+    <title>Antakye Restaurant | Lezzetin Adresi</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome (ikonlar için) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- moved internal styles to external CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- add .ico favicon (preferred by many browsers) and keep PNG fallback -->
+    <link rel="icon" href="antakye.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="antakye.ico" type="image/x-icon">
+    <link rel="icon" href="antakye-logo.png" type="image/png">
+</head>
+
+<body>
+
+    <!-- 🏠 Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#" aria-label="Antakye Restaurant">
+                <!-- use the same filename as the favicon -->
+                <img src="antakye-logo.png" alt="Antakye Restaurant" class="me-2 align-text-top">
+                Antakye Restaurant
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Menüyü aç" title="Menüyü aç">
+                <span class="navbar-toggler-icon"></span>
+                <span class="visually-hidden">Menüyü aç</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#menu">Menü</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Galeri</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">Hakkımızda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">İletişim</a></li>
+                    <li class="nav-item ms-2">
+                        <!-- yönlendirme: giris-kayit.html -->
+                        <a href="rezervasyon.html" class="btn btn-sm btn-reserve text-white">Rezervasyon</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🎯 Hero Section -->
+    <section class="hero">
+        <div class="container text-center text-md-start">
+            <div class="row align-items-center">
+                <div class="col-md-7">
+                    <h1 class="display-4">Lezzetin Adresi</h1>
+                    <p class="lead mb-4">"Geçmişin tarifleri, bugünün tazeliğiyle buluşuyor. Burada her tabak, samimi
+                        bir hoş geldiniz demektir."</p>
+                    <a href="rezervasyon.html" class="btn btn-reserve me-3">Rezervasyon Yap</a>
+                    <a href="#menu" class="btn btn-outline-light">Menüyü İncele</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🍲 Menü Önizlemesi (BÜTÜNÜYLE DEĞİŞTİRİLDİ: SVG textPath kullanılıyor) -->
+    <section id="menu" class="py-5 bg-light">
+        <div class="container">
+
+            <div class="rotator-wrap" aria-hidden="false">
+                <div class="rotator" aria-label="Menümüzü Keşfedin">
+                    <!-- SVG halka (textPath) -->
+                    <svg class="rotor-svg" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true"
+                        role="img">
+                        <defs>
+                            <!-- circle path: merkez 150,150 radius 110 -->
+                            <path id="menuCirclePath" d="M150,150 m0,-110 a110,110 0 1,1 0,220 a110,110 0 1,1 0,-220" />
+                        </defs>
+
+                        <!-- Dönen grup: text burada dönüyor -->
+                        <g class="rotating-text-group" aria-hidden="true">
+                            <text class="rotor-text">
+                                <!-- Tek bir uzun satırda tekrarlanan metin -->
+                                <textPath href="#menuCirclePath" startOffset="0">
+                                    Menümüzü Keşfedin • Menümüzü Keşfedin • Menümüzü Keşfedin • Menümüzü Keşfedin •
+                                    Menümüzü Keşfedin
+                                </textPath>
+                            </text>
+                        </g>
+                    </svg>
+
+                    <!-- Ortadaki sabit görsel -->
+                    <a class="center-link" href="https://qr.antakye.com" target="_blank" rel="noopener noreferrer"
+                        aria-label="Menüyü aç (QR)">
+                        <img src="menuicerikfoto.jpg" alt="Menümüzü Keşfedin — Antakye Menü" class="img-fluid">
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="https://qr.antakye.com" target="_blank" rel="noopener noreferrer"
+                    class="btn btn-outline-dark">Tam Menüyü Gör</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📸 Galeri -->
+    <section id="gallery" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Lezzetlerimizden Kareler</h2>
+
+            <!-- horizontal scrolling gallery -->
+            <div class="gallery-scroll" role="list" aria-label="Lezzetlerimizden Kareler — yatay kayan galeri">
+                <div class="gallery-item" role="listitem">
+                    <img src="https://qr.antakye.com/images/Adana%20Kebap.jpeg" alt="Harbiye Kebap" class="img-fluid">
+                    <div class="caption">Harbiye Kebap</div>
+                </div>
+                <div class="gallery-item" role="listitem">
+                    <img src="https://qr.antakye.com/images/Antakya%20Usul%C3%BC%20Tavuk%20D%C3%B6ner%20D%C3%BCr%C3%BCm.jpeg"
+                        alt="Antakya Usulü Tavuk Döner Dürüm" class="img-fluid">
+                    <div class="caption">Antakya Usulü Tavuk Döner Dürüm</div>
+                </div>
+                <div class="gallery-item" role="listitem">
+                    <img src="https://qr.antakye.com/images/Tavuk%20%C5%9Ei%C5%9F.jpeg" alt="Tavuk Şiş"
+                        class="img-fluid">
+                    <div class="caption">Tavuk Şiş</div>
+                </div>
+                <div class="gallery-item" role="listitem">
+                    <img src="https://qr.antakye.com/images/Arabi.jpeg" alt="Arabi" class="img-fluid">
+                    <div class="caption">Arabi</div>
+                </div>
+                <!-- ek görseller gerekiyorsa aynı yapıda çoğaltın -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 🏡 Hakkımızda & Rezervasyon Çağrısı -->
+    <section id="about" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-4 mb-md-0">
+                    <h2 class="section-title mb-4">Biz Kimiz?</h2>
+                    <p class="lead">Antakye Restaurant, 2025 yılından beri Eskişehir'in Odunpazarı semasında ailecek
+                        işletilen bir restorandır.</p>
+                    <p>"Lezzetimiz Hatay’ın bereketinden, ustalığımız geçmişin tariflerinden."</p>
+                    <ul class="list-unstyled mt-4">
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Eskişehirde gerçek Hatay
+                            ruhu!</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sadece yemek değil, bir
+                            ustalık ruhu</li>
+                        <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Glutensiz & vejetaryen
+                            seçenekler</li>
+                    </ul>
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="bg-white p-4 rounded shadow-sm border">
+                        <h4 class="text-primary mb-3"><i class="fas fa-calendar-alt me-2"></i> Bugün Rezervasyon</h4>
+                        <p class="text-muted mb-4">Masanızı şimdiden ayırtın!</p>
+                        <a href="rezervasyon.html" class="btn btn-reserve w-100 py-3">Online Rezervasyon</a>
+                        <p class="mt-3 mb-0">
+                            <small>
+                                <i class="fas fa-phone me-1"></i>
+                                <a href="tel:+905334543126" class="text-decoration-none text-reset"
+                                    aria-label="Telefon: +90 533 454 31 26">+90 533 454 31 26</a>
+                            </small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📍 İletişim -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Bize Ulaşın</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h5><i class="fas fa-map-marker-alt me-2 text-primary"></i>Adres</h5>
+                    <p>
+                        <a href="https://maps.app.goo.gl/akzt64dAHCmRzZCx6" target="_blank" rel="noopener noreferrer"
+                            class="text-decoration-none text-reset"
+                            aria-label="Antakye adresini haritada aç — Büyükdere, Sarı Konak Sk. No:6 D:A, 26040 Odunpazarı/Eskişehir">
+                            Büyükdere, Sarı Konak Sk. No:6 D:A, 26040 Odunpazarı/Eskişehir
+                        </a>
+                    </p>
+                    <h5><i class="fa-solid fa-phone" style="color: #0d6efd;"></i> Telefon</h5>
+                    <p><a href="tel:+905334543126" class="text-decoration-none text-reset"
+                            aria-label="Telefon: +90 533 454 31 26">+90 533 454 31 26</a></p>
+                    <h5><i class="fa-solid fa-envelope" style="color: #0d6efd;"></i> Mail</h5>
+                    <p>
+                        <a href="mailto:info@antakye.com" class="text-decoration-none text-reset"
+                            aria-label="E-posta: info@antakye.com">
+                            info@antakye.com
+                        </a>
+                    </p>
+                    <h5 class="mt-4"><i class="fas fa-clock me-2 text-primary"></i>Çalışma Saatleri</h5>
+                    <p>
+                        Haftanın her günü: 11.30 – 22.00<br>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3067.297233552988!2d30.492699476137062!3d39.755434371553626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cc17348eeaa597%3A0xe8e54bfecf1117f7!2sAntakye!5e0!3m2!1str!2str!4v1764079508110!5m2!1str!2str"
+                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 📞 Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Bizi Takip Edin</h5>
+                    <div class="social-icons mb-3">
+                        <a href="https://www.instagram.com/antakyedonerkebap/#" target="_blank"
+                            rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/905334543126" target="_blank" rel="noopener noreferrer"><i
+                                class="fab fa-whatsapp"></i></a>
+                    </div>
+
+                </div>
+            </div>
+            <hr class="my-4 bg-secondary">
+            <div class="text-center">
+                <p class="mb-0 small">© 2025 Antakye Restaurant. Tüm hakları saklıdır.
+                </p>
+            </div>
+        </div>
+        <p class="footer-heart">
+            <a href="admingiris.html" class="footer-admin-link" aria-label="Admin Girişi">
+                <span id="made-with">Made with</span>
+                <i class="fa-solid fa-heart fa-beat heart-icon" aria-hidden="true"></i>
+            </a>
+        </p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Navbar scroll efekti
+        window.addEventListener('scroll', function () {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-sm');
+                navbar.style.background = 'rgba(0,0,0,0.95)';
+            } else {
+                navbar.classList.remove('shadow-sm');
+                navbar.style.background = '';
+            }
+        });
+    </script>
+
+    <!-- Otomatik yatay kaydırma (galeri) -->
+    <script>
+        (function () {
+            const scroller = document.querySelector('.gallery-scroll');
+            if (!scroller) return;
+
+            // Duplicate items to create seamless loop
+            const children = Array.from(scroller.children);
+            children.forEach(item => scroller.appendChild(item.cloneNode(true)));
+
+            // Auto-scroll settings (px per frame)
+            const speed = parseFloat(scroller.dataset.speed) || 0.6; // ayarlayabilirsiniz
+            let paused = false;
+
+            // Pause on hover / focus for accessibility
+            scroller.addEventListener('mouseenter', () => paused = true);
+            scroller.addEventListener('mouseleave', () => paused = false);
+            scroller.addEventListener('focusin', () => paused = true);
+            scroller.addEventListener('focusout', () => paused = false);
+
+            // Mark auto-scrolling mode for CSS adjustments
+            scroller.classList.add('auto-scrolling');
+
+            // Continuous scroll loop
+            function step() {
+                if (!paused) {
+                    scroller.scrollLeft += speed;
+                    // When we've scrolled past the original items (half of scrollWidth), rewind by half
+                    const half = scroller.scrollWidth / 2;
+                    if (scroller.scrollLeft >= half) {
+                        scroller.scrollLeft -= half;
+                    }
+                }
+                requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        })();
+    </script>
+
+</body>
+
+</html>

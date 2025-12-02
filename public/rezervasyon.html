@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeni Rezervasyon | Antakye Restaurant</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="shortcut icon" href="antakye.ico" type="image/x-icon">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #ffffff 0%, #f7f7f8 100%);
+            min-height: 100vh;
+        }
+
+        /* Header Stilleri */
+        .header {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(rgba(201, 76, 41, 0.7), rgba(44, 62, 80, 0.7)), url('gorsel.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(201, 76, 41, 0.4) 0%, rgba(44, 62, 80, 0.4) 100%);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            padding: 0 20px 30px 20px;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-subtitle {
+            color: rgba(255, 255, 255, 0.95);
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            margin-top: 8px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Back Button */
+        .back-btn-container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: #c94c29;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(201, 76, 41, 0.3);
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .back-btn:hover {
+            background: #b04223;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(201, 76, 41, 0.4);
+            color: white;
+        }
+
+        /* Form Wrapper */
+        .form-wrapper {
+            display: flex;
+            justify-content: center;
+            margin: 30px 20px 50px 20px;
+            align-items: center;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Section Header */
+        .form-section-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #c94c29;
+        }
+
+        .form-section-header h2 {
+            color: #c94c29;
+            font-size: 1.8em;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        /* Input Groups */
+        .textBox-group {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .input-container label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        .input-container input,
+        .input-container select,
+        .input-container textarea {
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+            color: #2c3e50;
+        }
+
+        .input-container input:focus,
+        .input-container select:focus,
+        .input-container textarea:focus {
+            outline: none;
+            border-color: #c94c29;
+            box-shadow: 0 0 0 3px rgba(201, 76, 41, 0.1);
+        }
+
+        .input-container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Button Styles */
+        .button-group {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            flex: 1;
+            min-width: 150px;
+            padding: 14px 28px;
+            background: #c94c29;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(201, 76, 41, 0.3);
+        }
+
+        .button:hover {
+            background: #b04223;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(201, 76, 41, 0.4);
+        }
+
+        .button-secondary {
+            background: #6c757d;
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        .button-secondary:hover {
+            background: #495057;
+            box-shadow: 0 6px 16px rgba(108, 117, 125, 0.4);
+        }
+
+        /* Info Box */
+        .info-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border-left: 4px solid #c94c29;
+        }
+
+        .info-box i {
+            color: #c94c29;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .info-box p {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive */
+        @media screen and (min-width: 768px) {
+            .textBox-group {
+                flex-direction: row;
+            }
+
+            .button-group {
+                justify-content: flex-end;
+            }
+
+            .button {
+                flex: 0;
+            }
+        }
+
+        @media screen and (max-width: 576px) {
+            .form-wrapper {
+                padding: 25px 20px;
+                margin: 20px 10px 30px 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .button {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #c94c29;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="loading" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-calendar-check"></i> Yeni Rezervasyon</h1>
+                <p class="header-subtitle">Masanızı hemen ayırtın, lezzetin tadını çıkarın</p>
+            </div>
+        </div>
+
+        <div class="back-btn-container">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Ana Sayfaya Dön
+            </a>
+        </div>
+
+        <div class="form-wrapper">
+            <form action="/reservations" method="POST">
+                <div class="form-section-header">
+                    <h2>Rezervasyon Bilgileri</h2>
+                </div>
+
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <span><strong>Not:</strong> Rezervasyonunuz onaylandıktan sonra size e-posta ile bilgi
+                        verilecektir.</span>
+                </div>
+
+                <div class="textBox-group">
+                    <div class="input-container">
+                        <label for="isim"><i class="fas fa-user"></i> Ad</label>
+                        <input type="text" id="isim" name="isim" placeholder="Adınızı girin..." required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="Soyad"><i class="fas fa-user"></i> Soyad</label>
+                        <input type="text" id="Soyad" name="Soyad" placeholder="Soyadınızı girin..." required>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="TelefonNumarasi"><i class="fas fa-phone"></i> Telefon Numarası</label>
+                    <input type="tel" id="TelefonNumarasi" name="TelefonNumarasi" placeholder="5XX XXX XX XX" required>
+                </div>
+
+                <div class="input-container">
+                    <label for="email"><i class="fas fa-envelope"></i> E-posta Adresi</label>
+                    <input type="email" id="email" name="email" placeholder="ornek@domain.com" required>
+                </div>
+
+                <div class="textBox-group">
+                    <div class="input-container">
+                        <label for="tarih"><i class="fas fa-calendar"></i> Rezervasyon Tarihi</label>
+                        <input type="date" id="tarih" name="tarih" required>
+                    </div>
+
+                    <div class="input-container">
+                        <label for="saat"><i class="fas fa-clock"></i> Rezervasyon Saati</label>
+                        <input type="time" id="saat" name="saat" required>
+                    </div>
+                </div>
+
+                <div class="input-container">
+                    <label for="kisiSayisi"><i class="fas fa-users"></i> Kişi Sayısı</label>
+                    <input type="number" id="kisiSayisi" name="kisiSayisi" placeholder="Kişi sayısını girin..." min="1"
+                        max="20" required>
+                </div>
+
+                <div class="input-container">
+                    <label for="aciklama"><i class="fas fa-comment-alt"></i> Açıklama / Not (opsiyonel)</label>
+                    <textarea id="aciklama" name="aciklama"
+                        placeholder="Alerji, özel istek veya notlarınızı buraya yazabilirsiniz..."></textarea>
+                </div>
+
+                <div class="button-group">
+                    <button type="reset" class="button button-secondary">
+                        <i class="fas fa-redo"></i> Temizle
+                    </button>
+                    <button type="submit" class="button">
+                        <i class="fas fa-paper-plane"></i> Rezervasyon Yap
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Bugünün tarihini minimum tarih olarak ayarla
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('tarih').setAttribute('min', today);
+
+        document.querySelector("form").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Loading overlay göster
+            document.getElementById('loadingOverlay').classList.add('active');
+
+            const formData = new FormData(this);
+            const body = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch("/reservations", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(body)
+                });
+
+                // Loading overlay gizle
+                document.getElementById('loadingOverlay').classList.remove('active');
+
+                if (response.ok) {
+                    alert("✅ Rezervasyonunuz başarıyla alındı! En kısa sürede sizinle iletişime geçeceğiz.");
+                    window.location.href = "index.html";
+                } else {
+                    alert("❌ Bir hata oluştu! Lütfen tekrar deneyin veya telefonla iletişime geçin.");
+                }
+            } catch (error) {
+                document.getElementById('loadingOverlay').classList.remove('active');
+                alert("❌ Bağlantı hatası! Lütfen internet bağlantınızı kontrol edin.");
+            }
+        });
+
+        // Telefon numarası formatlaması
+        document.getElementById('TelefonNumarasi').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 10) value = value.slice(0, 10);
+            e.target.value = value;
+        });
+    </script>
+</body>
+
+</html>
