@@ -432,7 +432,7 @@ app.delete('/api/menu/:id', async (req, res) => {
 });
 
 // ==================== RAPOR API'LERİ (VIEW KULLANIMI) ====================
-// Bu bölümü index.js'in sonuna, "SUNUCU BAŞLAT" bölümünden ÖNCE ekleyin
+
 
 // Günlük satış raporu
 app.get('/api/reports/daily', async (req, res) => {
